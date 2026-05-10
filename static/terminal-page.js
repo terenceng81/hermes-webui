@@ -293,11 +293,36 @@ function switchTerminalView(view, silent) {
   });
 
   if (!isHub && !silent && TERMINAL_PAGE.term) _fitTerminalPage();
+  if (isHub && !silent) checkHubStatus();
 }
 
 function terminalCmdHint(el) {
   const hint = document.getElementById('terminalCmdHint');
   if (hint) hint.textContent = el.dataset.hint || '';
+}
+
+function navHubSection(path) {
+  const iframe = document.getElementById('hubIframe');
+  if (iframe) iframe.src = 'http://localhost:9119' + path;
+}
+
+async function checkHubStatus() {
+  const dot = (id, state) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.className = 'hub-status-dot' + (state === 'ok' ? ' hub-status-dot--ok' : state === 'err' ? ' hub-status-dot--err' : '');
+  };
+  dot('hubStatusWebui', 'ok'); // WebUI is always up (we're on it)
+  // Gateway: check via same-origin WebUI API
+  try {
+    const r = await fetch('api/sessions', { credentials: 'same-origin', cache: 'no-store' });
+    dot('hubStatusGateway', r.ok ? 'ok' : 'err');
+  } catch { dot('hubStatusGateway', 'err'); }
+  // Dashboard: no-cors fetch — throws only if server is completely unreachable
+  try {
+    await fetch('http://localhost:9119/', { mode: 'no-cors', cache: 'no-store' });
+    dot('hubStatusDash', 'ok');
+  } catch { dot('hubStatusDash', 'err'); }
 }
 
 function toggleTerminalSection(id) {

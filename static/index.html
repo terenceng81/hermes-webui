@@ -276,10 +276,31 @@
         <button class="terminal-view-tab active" data-view="terminal" onclick="switchTerminalView('terminal')">Terminal</button>
         <button class="terminal-view-tab" data-view="hub" onclick="switchTerminalView('hub')">Dashboard</button>
       </div>
-      <!-- Hub info bar (only shown when Dashboard tab active) -->
+      <!-- Hub panel (only shown when Dashboard tab active) -->
       <div class="terminal-hub-info" id="terminalHubInfo" style="display:none">
-        <div class="terminal-toggle-hint" style="margin:0;">If you see auth errors, open the dashboard directly first to authenticate.</div>
-        <a href="http://localhost:9119" target="_blank" rel="noopener" class="terminal-copy" style="text-decoration:none;text-align:center;">Open in new tab ↗</a>
+        <div class="terminal-control-label">Services</div>
+        <div class="hub-status-row">
+          <span class="hub-status-item"><span class="hub-status-dot" id="hubStatusGateway"></span><span class="hub-status-label">Gateway</span></span>
+          <span class="hub-status-item"><span class="hub-status-dot hub-status-dot--ok" id="hubStatusWebui"></span><span class="hub-status-label">WebUI</span></span>
+          <span class="hub-status-item"><span class="hub-status-dot" id="hubStatusDash"></span><span class="hub-status-label">Dashboard</span></span>
+          <button class="hub-refresh-btn" onclick="checkHubStatus()" title="Refresh status">↺</button>
+        </div>
+        <div class="terminal-control-label" style="margin-top:10px;">Navigate</div>
+        <div class="terminal-quick-cmds">
+          <button class="terminal-quick-btn" onclick="navHubSection('/')">Chat</button>
+          <button class="terminal-quick-btn" onclick="navHubSection('/sessions')">Sessions</button>
+          <button class="terminal-quick-btn" onclick="navHubSection('/analytics')">Analytics</button>
+          <button class="terminal-quick-btn" onclick="navHubSection('/models')">Models</button>
+          <button class="terminal-quick-btn" onclick="navHubSection('/logs')">Logs</button>
+          <button class="terminal-quick-btn" onclick="navHubSection('/skills')">Skills</button>
+          <button class="terminal-quick-btn" onclick="navHubSection('/config')">Config</button>
+          <button class="terminal-quick-btn" onclick="navHubSection('/profiles')">Profiles</button>
+          <button class="terminal-quick-btn" onclick="navHubSection('/cron')">Cron</button>
+          <button class="terminal-quick-btn" onclick="navHubSection('/keys')">Keys</button>
+        </div>
+        <div class="hub-divider"></div>
+        <div class="terminal-toggle-hint" style="margin:0;">Auth errors? Open the dashboard directly first to authenticate.</div>
+        <a href="http://localhost:9119" target="_blank" rel="noopener" class="terminal-copy" style="text-decoration:none;text-align:center;margin-top:2px;">Open in new tab ↗</a>
       </div>
       <div class="terminal-control-panel" id="terminalControlPanel">
         <!-- Run Hermes auto-start toggle -->

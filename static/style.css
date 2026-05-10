@@ -3731,8 +3731,17 @@ main.main.showing-terminal > #mainHub{display:flex;flex-direction:column;padding
 .terminal-toggle-switch input:checked+.terminal-toggle-knob{background:var(--accent,#f59e0b);}
 .terminal-toggle-switch input:checked+.terminal-toggle-knob::before{transform:translateX(16px);}
 .terminal-toggle-hint{font-size:11px;color:var(--muted);line-height:1.4;margin-top:-4px;}
-/* Hub info bar (shown in Dashboard tab) */
-.terminal-hub-info{display:flex;flex-direction:column;gap:6px;padding:10px 12px;border-bottom:1px solid var(--border);}
+/* Hub panel (shown in Dashboard tab) */
+.terminal-hub-info{display:flex;flex-direction:column;gap:6px;padding:10px 12px;overflow-y:auto;}
+.hub-status-row{display:flex;align-items:center;gap:10px;}
+.hub-status-item{display:flex;align-items:center;gap:5px;}
+.hub-status-dot{width:8px;height:8px;border-radius:50%;background:var(--border2,#555);flex-shrink:0;transition:background .3s;}
+.hub-status-dot--ok{background:var(--success,#4caf50);}
+.hub-status-dot--err{background:var(--error,#ef5350);}
+.hub-status-label{font-size:11px;color:var(--muted);}
+.hub-refresh-btn{margin-left:auto;background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;padding:0 3px;line-height:1;transition:color .15s;}
+.hub-refresh-btn:hover{color:var(--text);}
+.hub-divider{border:none;border-top:1px solid var(--border);margin:4px 0;}
 /* Collapsible command sections */
 .terminal-section-hdr{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;padding:5px 0;color:var(--muted);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;transition:color .15s;font-family:inherit;}
 .terminal-section-hdr:hover{color:var(--text);}
