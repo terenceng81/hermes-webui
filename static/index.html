@@ -279,9 +279,6 @@
         <button type="button" class="terminal-copy" id="terminalPageCopyBtn" onclick="copyTerminalPageOutput()" data-i18n="terminal_copy_output">Copy output</button>
         <button type="button" class="terminal-copy" id="terminalPageClearBtn" onclick="clearTerminalPage()" data-i18n="terminal_clear">Clear</button>
       </div>
-      <div class="terminal-page-viewport" id="terminalPageViewport">
-        <div class="terminal-page-surface" id="terminalPageSurface" aria-label="Terminal"></div>
-      </div>
     </div>
     <!-- Settings panel (menu list; actual panes render in .main) -->
     <div class="panel-view" id="panelSettings">
@@ -809,6 +806,11 @@
         <div class="main-view-content logs-content">
           <div class="logs-output" id="logsOutput"><div class="logs-empty" data-i18n="logs_empty">No log lines yet.</div></div>
         </div>
+      </div>
+    </div>
+    <div id="mainTerminal" class="main-view">
+      <div class="terminal-page-viewport" id="terminalPageViewport">
+        <div class="terminal-page-surface" id="terminalPageSurface" aria-label="Terminal"></div>
       </div>
     </div>
     <div id="mainSettings" class="main-view">
