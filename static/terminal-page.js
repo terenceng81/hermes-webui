@@ -293,7 +293,7 @@ function switchTerminalView(view, silent) {
   });
 
   if (!isHub && !silent && TERMINAL_PAGE.term) _fitTerminalPage();
-  if (isHub && !silent) checkHubStatus();
+  if (isHub) { _setupHubIframeStatus(); if (!silent) checkHubStatus(); }
 }
 
 function terminalCmdHint(el) {
@@ -304,6 +304,18 @@ function terminalCmdHint(el) {
 function navHubSection(path) {
   const iframe = document.getElementById('hubIframe');
   if (iframe) iframe.src = 'http://localhost:9119' + path;
+}
+
+function _setupHubIframeStatus() {
+  const iframe = document.getElementById('hubIframe');
+  if (!iframe || iframe._statusSetup) return;
+  iframe._statusSetup = true;
+  // Update Dashboard dot via iframe load event — avoids Chrome's Private
+  // Network Access policy that blocks direct fetch() to localhost:9119.
+  iframe.addEventListener('load', () => {
+    const el = document.getElementById('hubStatusDash');
+    if (el) el.className = 'hub-status-dot hub-status-dot--ok';
+  });
 }
 
 async function checkHubStatus() {
@@ -318,11 +330,9 @@ async function checkHubStatus() {
     const r = await fetch('api/sessions', { credentials: 'same-origin', cache: 'no-store' });
     dot('hubStatusGateway', r.ok ? 'ok' : 'err');
   } catch { dot('hubStatusGateway', 'err'); }
-  // Dashboard: no-cors fetch — throws only if server is completely unreachable
-  try {
-    await fetch('http://localhost:9119/', { mode: 'no-cors', cache: 'no-store' });
-    dot('hubStatusDash', 'ok');
-  } catch { dot('hubStatusDash', 'err'); }
+  // Dashboard dot is driven by the iframe load event — no direct fetch
+  // (Chrome's Private Network Access policy blocks cross-port fetches to localhost)
+  _setupHubIframeStatus();
 }
 
 function toggleTerminalSection(id) {
