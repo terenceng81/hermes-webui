@@ -256,3 +256,37 @@ function syncTerminalPageTheme() {
     TERMINAL_PAGE.term.options.theme = _terminalPageTheme();
   }
 }
+
+// Self-initialize: watch for panelTerminal becoming active instead of
+// requiring panels.js to call initTerminalPage() explicitly. This keeps
+// terminal-page.js self-contained and avoids modifying panels.js logic.
+(function _watchTerminalPanel() {
+  function _isTerminalActive() {
+    const el = document.getElementById('panelTerminal');
+    return el && el.classList.contains('active');
+  }
+
+  let _initialized = false;
+  const _observer = new MutationObserver(() => {
+    if (_isTerminalActive() && !_initialized) {
+      _initialized = true;
+      initTerminalPage();
+    } else if (!_isTerminalActive()) {
+      _initialized = false;
+    }
+  });
+
+  function _startWatching() {
+    const panel = document.getElementById('panelTerminal');
+    if (panel) {
+      _observer.observe(panel, { attributes: true, attributeFilter: ['class'] });
+    } else {
+      document.addEventListener('DOMContentLoaded', () => {
+        const p = document.getElementById('panelTerminal');
+        if (p) _observer.observe(p, { attributes: true, attributeFilter: ['class'] });
+      }, { once: true });
+    }
+  }
+
+  _startWatching();
+})();
