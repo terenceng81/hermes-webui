@@ -277,12 +277,14 @@ function switchTerminalView(view, silent) {
   const tEl = document.getElementById('mainTerminal');
   const hEl = document.getElementById('mainHub');
   const ctrlEl = document.getElementById('terminalControlPanel');
+  const hubInfoEl = document.getElementById('terminalHubInfo');
   const refreshBtn = document.getElementById('terminalPageRefreshBtn');
   const hubReloadBtn = document.getElementById('terminalHubReloadBtn');
 
   if (tEl) tEl.style.display = isHub ? 'none' : '';
   if (hEl) hEl.style.display = isHub ? 'flex' : 'none';
   if (ctrlEl) ctrlEl.style.display = isHub ? 'none' : '';
+  if (hubInfoEl) hubInfoEl.style.display = isHub ? '' : 'none';
   if (refreshBtn) refreshBtn.style.display = isHub ? 'none' : '';
   if (hubReloadBtn) hubReloadBtn.style.display = isHub ? '' : 'none';
 
@@ -296,6 +298,14 @@ function switchTerminalView(view, silent) {
 function terminalCmdHint(el) {
   const hint = document.getElementById('terminalCmdHint');
   if (hint) hint.textContent = el.dataset.hint || '';
+}
+
+function toggleTerminalSection(id) {
+  const body = document.getElementById(id);
+  if (!body) return;
+  const collapsed = body.classList.toggle('collapsed');
+  const chevron = document.getElementById(id + 'Chevron');
+  if (chevron) chevron.textContent = collapsed ? '▸' : '▾';
 }
 
 function clearTerminalPage() {

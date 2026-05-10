@@ -276,7 +276,13 @@
         <button class="terminal-view-tab active" data-view="terminal" onclick="switchTerminalView('terminal')">Terminal</button>
         <button class="terminal-view-tab" data-view="hub" onclick="switchTerminalView('hub')">Dashboard</button>
       </div>
+      <!-- Hub info bar (only shown when Dashboard tab active) -->
+      <div class="terminal-hub-info" id="terminalHubInfo" style="display:none">
+        <div class="terminal-toggle-hint" style="margin:0;">If you see auth errors, open the dashboard directly first to authenticate.</div>
+        <a href="http://localhost:9119" target="_blank" rel="noopener" class="terminal-copy" style="text-decoration:none;text-align:center;">Open in new tab ↗</a>
+      </div>
       <div class="terminal-control-panel" id="terminalControlPanel">
+        <!-- Run Hermes auto-start toggle -->
         <div class="terminal-toggle-row">
           <label class="terminal-control-label" for="terminalRunHermesToggle">Run Hermes</label>
           <label class="terminal-toggle-switch" title="Auto-start Hermes TUI when terminal connects">
@@ -285,23 +291,55 @@
           </label>
         </div>
         <div class="terminal-toggle-hint">Auto-starts the Hermes TUI on connect.</div>
-        <div class="terminal-control-label" style="margin-top:10px;">CLI Commands</div>
-        <div class="terminal-quick-cmds" onmouseleave="document.getElementById('terminalCmdHint').textContent=''">
-          <button class="terminal-quick-btn" data-hint="Switch the active AI model" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes model\n')">model</button>
-          <button class="terminal-quick-btn" data-hint="Show system status" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes status\n')">status</button>
-          <button class="terminal-quick-btn" data-hint="Diagnose agent issues" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes doctor\n')">doctor</button>
-          <button class="terminal-quick-btn" data-hint="Update Hermes agent" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes update\n')">update</button>
-          <button class="terminal-quick-btn" data-hint="Open configuration" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes config\n')">config</button>
-          <button class="terminal-quick-btn" data-hint="Manage chat sessions" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes sessions\n')">sessions</button>
-          <button class="terminal-quick-btn" data-hint="Control the gateway service" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes gateway\n')">gateway</button>
-          <button class="terminal-quick-btn" data-hint="Tail the agent log" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes logs\n')">logs</button>
-          <button class="terminal-quick-btn" data-hint="Browse installed skills" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes skills\n')">skills</button>
-          <button class="terminal-quick-btn" data-hint="Backup agent data" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes backup\n')">backup</button>
-          <button class="terminal-quick-btn" data-hint="View usage insights" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes insights\n')">insights</button>
-          <button class="terminal-quick-btn" data-hint="Manage agent profiles" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes profiles\n')">profiles</button>
+        <!-- Shell Commands section (expanded by default) -->
+        <button class="terminal-section-hdr" onclick="toggleTerminalSection('terminalShellCmds')">
+          <span>Shell Commands</span><span class="terminal-section-chevron" id="terminalShellCmdsChevron">▾</span>
+        </button>
+        <div class="terminal-section-body" id="terminalShellCmds">
+          <div class="terminal-cmd-group-label">Gateway</div>
+          <div class="terminal-quick-cmds terminal-quick-cmds--3" onmouseleave="document.getElementById('terminalCmdHint').textContent=''">
+            <button class="terminal-quick-btn terminal-quick-btn--ok" data-hint="hermes gateway start" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes gateway start\n')">start</button>
+            <button class="terminal-quick-btn terminal-quick-btn--warn" data-hint="hermes gateway stop" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes gateway stop\n')">stop</button>
+            <button class="terminal-quick-btn terminal-quick-btn--accent" data-hint="hermes gateway restart" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes gateway restart\n')">restart</button>
+          </div>
+          <div class="terminal-cmd-group-label" style="margin-top:6px;">General</div>
+          <div class="terminal-quick-cmds" onmouseleave="document.getElementById('terminalCmdHint').textContent=''">
+            <button class="terminal-quick-btn" data-hint="Launch Hermes TUI" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes\n')">hermes</button>
+            <button class="terminal-quick-btn" data-hint="hermes status — system status" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes status\n')">status</button>
+            <button class="terminal-quick-btn" data-hint="hermes doctor — diagnose issues" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes doctor\n')">doctor</button>
+            <button class="terminal-quick-btn" data-hint="hermes update — update agent" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes update\n')">update</button>
+            <button class="terminal-quick-btn" data-hint="hermes config — edit configuration" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes config\n')">config</button>
+            <button class="terminal-quick-btn" data-hint="hermes logs — tail agent log" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes logs\n')">logs</button>
+            <button class="terminal-quick-btn" data-hint="hermes model — switch model" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes model\n')">model</button>
+            <button class="terminal-quick-btn" data-hint="hermes sessions — manage sessions" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes sessions\n')">sessions</button>
+            <button class="terminal-quick-btn" data-hint="hermes skills — browse skills" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes skills\n')">skills</button>
+            <button class="terminal-quick-btn" data-hint="hermes profiles — manage profiles" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes profiles\n')">profiles</button>
+            <button class="terminal-quick-btn" data-hint="hermes backup — backup agent data" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes backup\n')">backup</button>
+            <button class="terminal-quick-btn" data-hint="hermes insights — usage insights" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes insights\n')">insights</button>
+          </div>
+        </div>
+        <!-- Hermes Console section (collapsed by default) -->
+        <button class="terminal-section-hdr" onclick="toggleTerminalSection('terminalConsoleCmds')">
+          <span>Hermes Console</span><span class="terminal-section-chevron" id="terminalConsoleCmdsChevron">▸</span>
+        </button>
+        <div class="terminal-section-body collapsed" id="terminalConsoleCmds">
+          <div class="terminal-cmd-group-label">Slash commands (inside hermes TUI)</div>
+          <div class="terminal-quick-cmds" onmouseleave="document.getElementById('terminalCmdHint').textContent=''">
+            <button class="terminal-quick-btn" data-hint="/help — show all commands" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('/help\n')">/help</button>
+            <button class="terminal-quick-btn" data-hint="/model — switch model" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('/model\n')">/model</button>
+            <button class="terminal-quick-btn" data-hint="/resume — resume last session" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('/resume\n')">/resume</button>
+            <button class="terminal-quick-btn" data-hint="/sessions — list sessions" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('/sessions\n')">/sessions</button>
+            <button class="terminal-quick-btn" data-hint="/title — set session title" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('/title ')">/title</button>
+            <button class="terminal-quick-btn" data-hint="/compact — compress context" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('/compact\n')">/compact</button>
+            <button class="terminal-quick-btn" data-hint="/reset — reset session" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('/reset\n')">/reset</button>
+            <button class="terminal-quick-btn" data-hint="/export — export as markdown" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('/export\n')">/export</button>
+            <button class="terminal-quick-btn" data-hint="/skills — list installed skills" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('/skills\n')">/skills</button>
+            <button class="terminal-quick-btn" data-hint="/memory — show memory contents" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('/memory\n')">/memory</button>
+          </div>
         </div>
         <div class="terminal-cmd-hint" id="terminalCmdHint"></div>
-        <div class="terminal-control-label" style="margin-top:8px;">Theme</div>
+        <!-- Theme -->
+        <div class="terminal-control-label" style="margin-top:6px;">Theme</div>
         <div class="terminal-theme-btns">
           <button class="terminal-theme-btn active" data-theme="dark" onclick="setTerminalPageTheme('dark')">Dark</button>
           <button class="terminal-theme-btn" data-theme="matrix" onclick="setTerminalPageTheme('matrix')">Matrix</button>

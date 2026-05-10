@@ -3731,12 +3731,25 @@ main.main.showing-terminal > #mainHub{display:flex;flex-direction:column;padding
 .terminal-toggle-switch input:checked+.terminal-toggle-knob{background:var(--accent,#f59e0b);}
 .terminal-toggle-switch input:checked+.terminal-toggle-knob::before{transform:translateX(16px);}
 .terminal-toggle-hint{font-size:11px;color:var(--muted);line-height:1.4;margin-top:-4px;}
+/* Hub info bar (shown in Dashboard tab) */
+.terminal-hub-info{display:flex;flex-direction:column;gap:6px;padding:10px 12px;border-bottom:1px solid var(--border);}
+/* Collapsible command sections */
+.terminal-section-hdr{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;padding:5px 0;color:var(--muted);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;transition:color .15s;font-family:inherit;}
+.terminal-section-hdr:hover{color:var(--text);}
+.terminal-section-chevron{font-size:11px;flex-shrink:0;}
+.terminal-section-body{display:flex;flex-direction:column;gap:5px;padding-bottom:4px;}
+.terminal-section-body.collapsed{display:none;}
+.terminal-cmd-group-label{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.03em;}
 /* CLI quick command grid */
 .terminal-quick-cmds{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+.terminal-quick-cmds--3{grid-template-columns:1fr 1fr 1fr;}
 .terminal-quick-btn{background:var(--surface);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:11px;font-weight:600;padding:6px 4px;cursor:pointer;text-align:center;transition:background .15s,border-color .15s;font-family:inherit;}
 .terminal-quick-btn:hover{background:var(--hover-bg);border-color:var(--border2);}
+.terminal-quick-btn--accent{border-color:var(--accent,var(--border));color:var(--accent-text,var(--text));}
+.terminal-quick-btn--ok{color:var(--success,#4caf50);}
+.terminal-quick-btn--warn{color:var(--error,#ef5350);}
 /* Hover hint text below the grid */
-.terminal-cmd-hint{min-height:1.6em;font-size:11px;color:var(--accent-text,var(--muted));padding:1px 0;line-height:1.4;font-style:italic;margin-top:-4px;}
+.terminal-cmd-hint{min-height:1.6em;font-size:11px;color:var(--accent-text,var(--muted));padding:1px 0;line-height:1.4;font-style:italic;margin-top:-2px;}
 /* Terminal theme selector */
 .terminal-theme-btns{display:flex;gap:4px;}
 .terminal-theme-btn{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;font-weight:600;padding:5px 2px;cursor:pointer;transition:background .15s,border-color .15s,color .15s;font-family:inherit;}
