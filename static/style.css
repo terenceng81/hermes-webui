@@ -3706,7 +3706,7 @@ main.main.showing-logs > #mainLogs{display:flex;}
 
 /* ── Terminal page panel (custom addition — hides chat, shows terminal main view) ── */
 main.main > #mainTerminal{display:none;}
-main.main.showing-terminal > #mainChat{display:none;}
+main.main.showing-terminal > #mainChat{display:none!important;}
 main.main.showing-terminal > #mainTerminal{display:flex;flex-direction:column;padding:0;}
 .terminal-control-panel{display:flex;flex-direction:column;gap:8px;padding:12px;overflow-y:auto;}
 .terminal-control-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);}
