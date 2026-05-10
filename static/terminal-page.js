@@ -233,7 +233,7 @@ async function initTerminalPage(force) {
     await api('/api/terminal/start', { method: 'POST', body: JSON.stringify({ session_id: sid, rows: dims.rows, cols: dims.cols }) });
     _connectTerminalPageOutput();
     _fitTerminalPage();
-    if (TERMINAL_PAGE.runHermes) {
+    if (TERMINAL_PAGE.runHermes && !force) {
       setTimeout(() => sendTerminalPageCommand('hermes\n'), 600);
     }
   } catch (e) {
