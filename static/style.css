@@ -3703,3 +3703,13 @@ main.main.showing-logs > #mainLogs{display:flex;}
 .log-line-debug{color:var(--muted);opacity:.75;}
 .logs-empty,.logs-hint{margin:8px 14px;padding:12px;border:1px solid var(--border);border-radius:8px;color:var(--muted);background:var(--surface);white-space:normal;font-family:var(--font-ui,system-ui,sans-serif);font-size:12px;}
 .logs-hint.warn{color:#f59e0b;border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.08);}
+
+/* ── Terminal page panel (#XXXX) ──────────────────────────────────────────────── */
+main.main.showing-terminal > #mainLogs{display:none;}
+.terminal-control-panel{display:flex;flex-direction:column;gap:8px;padding:12px;overflow-y:auto;}
+.terminal-control-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);}
+.terminal-control-panel select{width:100%;background:var(--input-bg);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:7px 9px;font-size:12px;}
+.terminal-copy{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:8px;padding:7px 10px;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s,border-color .15s,color .15s;}
+.terminal-copy:hover{background:var(--hover-bg);border-color:var(--border2);}
+.terminal-page-viewport{flex:1;overflow:auto;background:var(--code-bg);border:1px solid var(--border);border-radius:12px;margin:0 12px 12px 12px;min-height:300px;}
+.terminal-page-surface{width:100%;height:100%;padding:12px;box-sizing:border-box;}
