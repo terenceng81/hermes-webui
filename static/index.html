@@ -344,7 +344,13 @@
           <span>Hermes Console</span><span class="terminal-section-chevron" id="terminalConsoleCmdsChevron">▸</span>
         </button>
         <div class="terminal-section-body collapsed" id="terminalConsoleCmds">
-          <div class="terminal-cmd-group-label">Slash commands (inside hermes TUI)</div>
+          <div class="terminal-cmd-group-label">Gateway</div>
+          <div class="terminal-quick-cmds terminal-quick-cmds--3" onmouseleave="document.getElementById('terminalCmdHint').textContent=''">
+            <button class="terminal-quick-btn terminal-quick-btn--ok" data-hint="hermes gateway start" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes gateway start\n')">start</button>
+            <button class="terminal-quick-btn terminal-quick-btn--warn" data-hint="hermes gateway stop" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes gateway stop\n')">stop</button>
+            <button class="terminal-quick-btn terminal-quick-btn--accent" data-hint="hermes gateway restart" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes gateway restart\n')">restart</button>
+          </div>
+          <div class="terminal-cmd-group-label" style="margin-top:6px;">Slash commands (inside hermes TUI)</div>
           <div class="terminal-quick-cmds" onmouseleave="document.getElementById('terminalCmdHint').textContent=''">
             <button class="terminal-quick-btn" data-hint="/help — show all commands" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('/help\n')">/help</button>
             <button class="terminal-quick-btn" data-hint="/model — switch model" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('/model\n')">/model</button>

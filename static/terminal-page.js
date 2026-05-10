@@ -341,6 +341,16 @@ function toggleTerminalSection(id) {
   const collapsed = body.classList.toggle('collapsed');
   const chevron = document.getElementById(id + 'Chevron');
   if (chevron) chevron.textContent = collapsed ? '▸' : '▾';
+  // Accordion: expanding one section collapses the other
+  if (!collapsed) {
+    const other = id === 'terminalShellCmds' ? 'terminalConsoleCmds' : 'terminalShellCmds';
+    const otherBody = document.getElementById(other);
+    if (otherBody && !otherBody.classList.contains('collapsed')) {
+      otherBody.classList.add('collapsed');
+      const otherChevron = document.getElementById(other + 'Chevron');
+      if (otherChevron) otherChevron.textContent = '▸';
+    }
+  }
 }
 
 function clearTerminalPage() {
