@@ -2918,6 +2918,11 @@ def handle_get(handler, parsed) -> bool:
             bad(handler, str(exc), status=400)
         return True
 
+    if parsed.path == "/api/dashboard/theme":
+        from api import hub_theme
+        j(handler, hub_theme.get_active_theme())
+        return True
+
     # ── Providers (GET) ──
     if parsed.path == "/api/providers":
         return j(handler, get_providers())
@@ -3753,6 +3758,14 @@ def handle_post(handler, parsed) -> bool:
             bad(handler, str(exc), status=400)
         except Exception as exc:
             logger.exception("dashboard config save failed")
+            bad(handler, str(exc), status=500)
+        return True
+
+    if parsed.path == "/api/dashboard/theme":
+        from api import hub_theme
+        try:
+            j(handler, hub_theme.set_active_theme(body.get("name", "")))
+        except Exception as exc:
             bad(handler, str(exc), status=500)
         return True
 

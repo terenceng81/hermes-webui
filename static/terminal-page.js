@@ -293,12 +293,39 @@ function switchTerminalView(view, silent) {
   });
 
   if (!isHub && !silent && TERMINAL_PAGE.term) _fitTerminalPage();
-  if (isHub) { _setupHubIframeStatus(); if (!silent) checkHubStatus(); }
+  if (isHub) { _setupHubIframeStatus(); if (!silent) { checkHubStatus(); fetchHubTheme(); } }
 }
 
 function terminalCmdHint(el) {
   const hint = document.getElementById('terminalCmdHint');
   if (hint) hint.textContent = el.dataset.hint || '';
+}
+
+function setHubTheme(name) {
+  document.querySelectorAll('.hub-theme-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.theme === name);
+  });
+  fetch('api/dashboard/theme', {
+    method: 'POST',
+    credentials: 'same-origin',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name }),
+  }).then(() => {
+    const iframe = document.getElementById('hubIframe');
+    if (iframe) { iframe.src = iframe.src; }
+  }).catch(e => console.error('[hub] theme set failed:', e));
+}
+
+async function fetchHubTheme() {
+  try {
+    const r = await fetch('api/dashboard/theme', { credentials: 'same-origin', cache: 'no-store' });
+    if (!r.ok) return;
+    const data = await r.json();
+    const active = data.active || 'default';
+    document.querySelectorAll('.hub-theme-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.theme === active);
+    });
+  } catch (_) {}
 }
 
 function navHubSection(path) {
