@@ -98,7 +98,6 @@
     <button class="rail-btn nav-tab dashboard-link has-tooltip" id="dashboardRailBtn" data-dashboard-link style="display:none" onclick="openHermesDashboard(event)" data-tooltip="Hermes Dashboard" data-i18n-title="tab_dashboard" aria-label="Hermes Dashboard"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg><span class="dashboard-external-badge" aria-hidden="true"></span></button>
     <button class="rail-btn nav-tab has-tooltip" data-panel="logs" onclick="switchPanel('logs')" data-tooltip="Logs" data-i18n-title="tab_logs" aria-label="Logs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h8"/><path d="M8 9h2"/></svg></button>
     <button class="rail-btn nav-tab has-tooltip" data-panel="terminal" onclick="switchPanel('terminal')" data-tooltip="Terminal" data-i18n-title="tab_terminal" aria-label="Terminal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></button>
-    <button class="rail-btn nav-tab has-tooltip" data-panel="hub" onclick="switchPanel('hub')" data-tooltip="Agent Hub" aria-label="Agent Hub"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button>
     <div class="rail-spacer"></div>
     <button class="rail-btn nav-tab has-tooltip" data-panel="settings" onclick="switchPanel('settings')" data-tooltip="Settings" data-i18n-title="tab_settings" aria-label="Settings"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
   </nav>
@@ -117,7 +116,6 @@
       <button class="nav-tab dashboard-link has-tooltip has-tooltip--bottom" id="dashboardMobileBtn" data-dashboard-link data-label="Dashboard" style="display:none" onclick="openHermesDashboard(event)" data-tooltip="Hermes Dashboard" data-i18n-title="tab_dashboard"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg><span class="dashboard-external-badge" aria-hidden="true"></span></button>
       <button class="nav-tab has-tooltip has-tooltip--bottom" data-panel="logs" data-label="Logs" onclick="switchPanel('logs')" data-tooltip="Logs" data-i18n-title="tab_logs"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h8"/><path d="M8 9h2"/></svg></button>
       <button class="nav-tab has-tooltip has-tooltip--bottom" data-panel="terminal" data-label="Terminal" onclick="switchPanel('terminal')" data-tooltip="Terminal" data-i18n-title="tab_terminal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></button>
-      <button class="nav-tab has-tooltip has-tooltip--bottom" data-panel="hub" data-label="Hub" onclick="switchPanel('hub')" data-tooltip="Agent Hub"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button>
       <!-- Settings button mirrored here for mobile (rail is desktop-only via @media >=768px). Keep in sync with rail entry. -->
       <button class="nav-tab has-tooltip has-tooltip--bottom" data-panel="settings" onclick="switchPanel('settings')" data-tooltip="Settings" data-i18n-title="tab_settings"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
     </div>
@@ -265,52 +263,52 @@
         <button type="button" class="logs-copy" id="logsCopyAll" onclick="copyLogsAll()" data-i18n="logs_copy_all">Copy all</button>
       </div>
     </div>
-    <!-- Terminal panel -->
+    <!-- Terminal & Dashboard panel -->
     <div class="panel-view" id="panelTerminal">
       <div class="panel-head">
         <span data-i18n="tab_terminal">Terminal</span>
         <div class="panel-head-actions">
-          <button class="panel-head-btn has-tooltip has-tooltip--bottom" id="terminalPageRefreshBtn" onclick="initTerminalPage()" data-tooltip="Reconnect" aria-label="Reconnect"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+          <button class="panel-head-btn has-tooltip has-tooltip--bottom" id="terminalPageRefreshBtn" onclick="initTerminalPage(true)" data-tooltip="Reconnect" aria-label="Reconnect"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+          <button class="panel-head-btn has-tooltip has-tooltip--bottom" id="terminalHubReloadBtn" onclick="document.getElementById('hubIframe')&&(document.getElementById('hubIframe').src=document.getElementById('hubIframe').src)" data-tooltip="Reload dashboard" aria-label="Reload dashboard" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
         </div>
       </div>
-      <div class="terminal-control-panel">
+      <div class="terminal-view-tabs">
+        <button class="terminal-view-tab active" data-view="terminal" onclick="switchTerminalView('terminal')">Terminal</button>
+        <button class="terminal-view-tab" data-view="hub" onclick="switchTerminalView('hub')">Dashboard</button>
+      </div>
+      <div class="terminal-control-panel" id="terminalControlPanel">
         <div class="terminal-toggle-row">
           <label class="terminal-control-label" for="terminalRunHermesToggle">Run Hermes</label>
-          <label class="terminal-toggle-switch has-tooltip" data-tooltip="Auto-start Hermes TUI when terminal connects">
+          <label class="terminal-toggle-switch" title="Auto-start Hermes TUI when terminal connects">
             <input type="checkbox" id="terminalRunHermesToggle" onchange="setTerminalPageRunHermes(this.checked)">
             <span class="terminal-toggle-knob"></span>
           </label>
         </div>
         <div class="terminal-toggle-hint">Auto-starts the Hermes TUI on connect.</div>
         <div class="terminal-control-label" style="margin-top:10px;">CLI Commands</div>
-        <div class="terminal-quick-cmds">
-          <button class="terminal-quick-btn has-tooltip" data-tooltip="Switch the active AI model" onclick="sendTerminalPageCommand('hermes model\n')">model</button>
-          <button class="terminal-quick-btn has-tooltip" data-tooltip="Show system status" onclick="sendTerminalPageCommand('hermes status\n')">status</button>
-          <button class="terminal-quick-btn has-tooltip" data-tooltip="Diagnose agent issues" onclick="sendTerminalPageCommand('hermes doctor\n')">doctor</button>
-          <button class="terminal-quick-btn has-tooltip" data-tooltip="Update Hermes agent" onclick="sendTerminalPageCommand('hermes update\n')">update</button>
-          <button class="terminal-quick-btn has-tooltip" data-tooltip="Open configuration" onclick="sendTerminalPageCommand('hermes config\n')">config</button>
-          <button class="terminal-quick-btn has-tooltip" data-tooltip="Manage chat sessions" onclick="sendTerminalPageCommand('hermes sessions\n')">sessions</button>
-          <button class="terminal-quick-btn has-tooltip" data-tooltip="Control the gateway service" onclick="sendTerminalPageCommand('hermes gateway\n')">gateway</button>
-          <button class="terminal-quick-btn has-tooltip" data-tooltip="Tail the agent log" onclick="sendTerminalPageCommand('hermes logs\n')">logs</button>
-          <button class="terminal-quick-btn has-tooltip" data-tooltip="Browse installed skills" onclick="sendTerminalPageCommand('hermes skills\n')">skills</button>
-          <button class="terminal-quick-btn has-tooltip" data-tooltip="Backup agent data" onclick="sendTerminalPageCommand('hermes backup\n')">backup</button>
-          <button class="terminal-quick-btn has-tooltip" data-tooltip="View usage insights" onclick="sendTerminalPageCommand('hermes insights\n')">insights</button>
-          <button class="terminal-quick-btn has-tooltip" data-tooltip="Manage agent profiles" onclick="sendTerminalPageCommand('hermes profiles\n')">profiles</button>
+        <div class="terminal-quick-cmds" onmouseleave="document.getElementById('terminalCmdHint').textContent=''">
+          <button class="terminal-quick-btn" data-hint="Switch the active AI model" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes model\n')">model</button>
+          <button class="terminal-quick-btn" data-hint="Show system status" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes status\n')">status</button>
+          <button class="terminal-quick-btn" data-hint="Diagnose agent issues" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes doctor\n')">doctor</button>
+          <button class="terminal-quick-btn" data-hint="Update Hermes agent" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes update\n')">update</button>
+          <button class="terminal-quick-btn" data-hint="Open configuration" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes config\n')">config</button>
+          <button class="terminal-quick-btn" data-hint="Manage chat sessions" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes sessions\n')">sessions</button>
+          <button class="terminal-quick-btn" data-hint="Control the gateway service" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes gateway\n')">gateway</button>
+          <button class="terminal-quick-btn" data-hint="Tail the agent log" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes logs\n')">logs</button>
+          <button class="terminal-quick-btn" data-hint="Browse installed skills" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes skills\n')">skills</button>
+          <button class="terminal-quick-btn" data-hint="Backup agent data" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes backup\n')">backup</button>
+          <button class="terminal-quick-btn" data-hint="View usage insights" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes insights\n')">insights</button>
+          <button class="terminal-quick-btn" data-hint="Manage agent profiles" onmouseover="terminalCmdHint(this)" onclick="sendTerminalPageCommand('hermes profiles\n')">profiles</button>
+        </div>
+        <div class="terminal-cmd-hint" id="terminalCmdHint"></div>
+        <div class="terminal-control-label" style="margin-top:8px;">Theme</div>
+        <div class="terminal-theme-btns">
+          <button class="terminal-theme-btn active" data-theme="dark" onclick="setTerminalPageTheme('dark')">Dark</button>
+          <button class="terminal-theme-btn" data-theme="matrix" onclick="setTerminalPageTheme('matrix')">Matrix</button>
+          <button class="terminal-theme-btn" data-theme="match" onclick="setTerminalPageTheme('match')">Match UI</button>
         </div>
         <button type="button" class="terminal-copy" id="terminalPageCopyBtn" onclick="copyTerminalPageOutput()">Copy selection</button>
         <button type="button" class="terminal-copy" id="terminalPageClearBtn" onclick="clearTerminalPage()">Clear</button>
-      </div>
-    </div>
-    <!-- Hub panel (sidebar controls for the embedded dashboard iframe) -->
-    <div class="panel-view" id="panelHub">
-      <div class="panel-head">
-        <span>Agent Hub</span>
-        <div class="panel-head-actions">
-          <button class="panel-head-btn has-tooltip has-tooltip--bottom" onclick="document.getElementById('hubIframe')&&(document.getElementById('hubIframe').src=document.getElementById('hubIframe').src)" data-tooltip="Reload" aria-label="Reload"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
-        </div>
-      </div>
-      <div class="hub-control-panel">
-        <div class="hub-info">Embedded Hermes Agent dashboard. Accessible only through this password-protected interface.</div>
       </div>
     </div>
     <!-- Settings panel (menu list; actual panes render in .main) -->

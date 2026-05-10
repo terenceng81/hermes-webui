@@ -3704,26 +3704,25 @@ main.main.showing-logs > #mainLogs{display:flex;}
 .logs-empty,.logs-hint{margin:8px 14px;padding:12px;border:1px solid var(--border);border-radius:8px;color:var(--muted);background:var(--surface);white-space:normal;font-family:var(--font-ui,system-ui,sans-serif);font-size:12px;}
 .logs-hint.warn{color:#f59e0b;border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.08);}
 
-/* ── Hub panel (embedded dashboard iframe) ───────────────────────────── */
-main.main > #mainHub{display:none;}
-main.main.showing-hub > #mainChat{display:none!important;}
-main.main.showing-hub > #mainHub{display:flex;flex-direction:column;padding:0;}
-#mainHub iframe{flex:1;width:100%;height:100%;border:none;}
-.hub-control-panel{padding:12px;}
-.hub-info{font-size:11px;color:var(--muted);line-height:1.5;}
-
-/* ── Terminal page panel (custom addition — hides chat, shows terminal main view) ── */
-main.main > #mainTerminal{display:none;}
+/* ── Terminal & Dashboard panel (custom addition) ────────────────────── */
+/* Main area: hide both views by default; showing-terminal activates both */
+main.main > #mainTerminal,main.main > #mainHub{display:none;}
 main.main.showing-terminal > #mainChat{display:none!important;}
 main.main.showing-terminal > #mainTerminal{display:flex;flex-direction:column;padding:0;}
+main.main.showing-terminal > #mainHub{display:flex;flex-direction:column;padding:0;}
+#mainHub iframe{flex:1;width:100%;height:100%;border:none;}
+/* Sidebar panel layout */
+.terminal-view-tabs{display:flex;border-bottom:1px solid var(--border);padding:0 12px;flex-shrink:0;}
+.terminal-view-tab{flex:1;padding:7px 0;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;transition:color .15s,border-color .15s;margin-bottom:-1px;}
+.terminal-view-tab.active{color:var(--text);border-bottom-color:var(--accent,currentColor);}
+.terminal-view-tab:hover:not(.active){color:var(--text);}
 .terminal-control-panel{display:flex;flex-direction:column;gap:8px;padding:12px;overflow-y:auto;}
 .terminal-control-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);}
-.terminal-control-panel select{width:100%;background:var(--input-bg);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:7px 9px;font-size:12px;}
 .terminal-copy{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:8px;padding:7px 10px;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s,border-color .15s,color .15s;}
 .terminal-copy:hover{background:var(--hover-bg);border-color:var(--border2);}
 .terminal-page-viewport{flex:1;overflow:hidden;background:var(--code-bg);margin:0;padding:0;}
 .terminal-page-surface{width:100%;height:100%;}
-/* Terminal panel — Run Hermes toggle */
+/* Run Hermes toggle */
 .terminal-toggle-row{display:flex;align-items:center;justify-content:space-between;gap:8px;}
 .terminal-toggle-switch{position:relative;display:inline-block;width:36px;height:20px;flex-shrink:0;cursor:pointer;}
 .terminal-toggle-switch input{opacity:0;width:0;height:0;position:absolute;}
@@ -3732,7 +3731,14 @@ main.main.showing-terminal > #mainTerminal{display:flex;flex-direction:column;pa
 .terminal-toggle-switch input:checked+.terminal-toggle-knob{background:var(--accent,#f59e0b);}
 .terminal-toggle-switch input:checked+.terminal-toggle-knob::before{transform:translateX(16px);}
 .terminal-toggle-hint{font-size:11px;color:var(--muted);line-height:1.4;margin-top:-4px;}
-/* Terminal panel — CLI quick command grid */
+/* CLI quick command grid */
 .terminal-quick-cmds{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
-.terminal-quick-btn{background:var(--surface);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:11px;font-weight:600;padding:6px 4px;cursor:pointer;text-align:center;transition:background .15s,border-color .15s,color .15s;font-family:inherit;}
-.terminal-quick-btn:hover{background:var(--hover-bg);border-color:var(--border2);color:var(--accent-text,var(--text));}
+.terminal-quick-btn{background:var(--surface);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:11px;font-weight:600;padding:6px 4px;cursor:pointer;text-align:center;transition:background .15s,border-color .15s;font-family:inherit;}
+.terminal-quick-btn:hover{background:var(--hover-bg);border-color:var(--border2);}
+/* Hover hint text below the grid */
+.terminal-cmd-hint{min-height:1.6em;font-size:11px;color:var(--accent-text,var(--muted));padding:1px 0;line-height:1.4;font-style:italic;margin-top:-4px;}
+/* Terminal theme selector */
+.terminal-theme-btns{display:flex;gap:4px;}
+.terminal-theme-btn{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;font-weight:600;padding:5px 2px;cursor:pointer;transition:background .15s,border-color .15s,color .15s;font-family:inherit;}
+.terminal-theme-btn:hover{background:var(--hover-bg);color:var(--text);}
+.terminal-theme-btn.active{background:var(--accent-bg,rgba(255,215,0,.12));border-color:var(--accent,var(--border2));color:var(--text);}

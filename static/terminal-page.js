@@ -1,4 +1,4 @@
-// Terminal page — standalone terminal panel using the same API as the composer terminal:
+// Terminal page — standalone terminal + dashboard panel using the same API as the composer terminal:
 //   POST /api/terminal/start  — start/restart the terminal
 //   SSE  /api/terminal/output — receive output
 //   POST /api/terminal/input  — send keystrokes
@@ -11,7 +11,39 @@ const TERMINAL_PAGE = {
   sessionId: null,
   resizeObserver: null,
   runHermes: false,
+  activeView: 'terminal',
+  theme: 'dark',
 };
+
+// ── Preset themes ─────────────────────────────────────────────────────────────
+
+const _TERM_THEMES = {
+  dark: {
+    background: '#0D0D1A', foreground: '#E2E8F0', cursor: '#FFD700',
+    selectionBackground: 'rgba(255,215,0,.18)',
+    black: '#0D0D1A', red: '#EF5350', green: '#4CAF50', yellow: '#FFC107',
+    blue: '#4DD0E1', magenta: '#FFD700', cyan: '#4DD0E1', white: '#E2E8F0',
+    brightBlack: '#888', brightRed: '#EF5350', brightGreen: '#4CAF50',
+    brightYellow: '#FFD700', brightBlue: '#4DD0E1', brightMagenta: '#FFD700',
+    brightCyan: '#4DD0E1', brightWhite: '#FFFFFF',
+  },
+  matrix: {
+    background: '#0A0F0A', foreground: '#00FF41', cursor: '#00FF41',
+    selectionBackground: 'rgba(0,255,65,.25)',
+    black: '#000', red: '#FF3333', green: '#00FF41', yellow: '#FFFF00',
+    blue: '#4444FF', magenta: '#FF55FF', cyan: '#55FFFF', white: '#00FF41',
+    brightBlack: '#555', brightRed: '#FF5555', brightGreen: '#55FF55',
+    brightYellow: '#FFFF55', brightBlue: '#5555FF', brightMagenta: '#FF55FF',
+    brightCyan: '#55FFFF', brightWhite: '#FFFFFF',
+  },
+};
+
+function _resolveTerminalTheme(theme) {
+  if (theme === 'match') return _terminalPageTheme();
+  return _TERM_THEMES[theme] || _TERM_THEMES.dark;
+}
+
+// ── DOM helpers ───────────────────────────────────────────────────────────────
 
 function _terminalPageEls() {
   return {
@@ -49,6 +81,8 @@ function _terminalPageDimensions() {
   return { rows: 24, cols: 80 };
 }
 
+// ── xterm.js setup ────────────────────────────────────────────────────────────
+
 function _ensureXtermPage() {
   const { surface } = _terminalPageEls();
   if (!surface) return null;
@@ -57,13 +91,17 @@ function _ensureXtermPage() {
     surface.textContent = 'Terminal library failed to load. Check network access to cdn.jsdelivr.net.';
     return null;
   }
+  const storedTheme = TERMINAL_PAGE.theme || localStorage.getItem('hermes-terminal-theme') || 'dark';
+  TERMINAL_PAGE.theme = storedTheme;
+  const resolvedTheme = _resolveTerminalTheme(storedTheme);
+
   const term = new window.Terminal({
     cursorBlink: true,
     fontSize: 13,
     fontFamily: 'Menlo, Monaco, Consolas, "Liberation Mono", monospace',
     scrollback: 2000,
     convertEol: false,
-    theme: _terminalPageTheme(),
+    theme: resolvedTheme,
   });
   let fitAddon = null;
   if (window.FitAddon && typeof window.FitAddon.FitAddon === 'function') {
@@ -76,6 +114,10 @@ function _ensureXtermPage() {
   term.open(surface);
   TERMINAL_PAGE.term = term;
   TERMINAL_PAGE.fitAddon = fitAddon;
+
+  // Apply viewport background to match theme (overrides CSS var)
+  const { viewport } = _terminalPageEls();
+  if (viewport && resolvedTheme.background) viewport.style.background = resolvedTheme.background;
 
   term.onData(data => {
     const sid = TERMINAL_PAGE.sessionId;
@@ -109,6 +151,8 @@ function _setupTerminalPageResize() {
   TERMINAL_PAGE.resizeObserver = new ResizeObserver(() => _fitTerminalPage());
   TERMINAL_PAGE.resizeObserver.observe(viewport);
 }
+
+// ── SSE connection ────────────────────────────────────────────────────────────
 
 function _connectTerminalPageOutput() {
   const sid = TERMINAL_PAGE.sessionId;
@@ -144,19 +188,38 @@ function _connectTerminalPageOutput() {
   });
 }
 
-async function initTerminalPage() {
+// ── Public API ────────────────────────────────────────────────────────────────
+
+async function initTerminalPage(force) {
   const sid = (typeof S !== 'undefined' && S && S.session) ? S.session.session_id : null;
 
-  const term = _ensureXtermPage();
-  if (!term) return;
+  // Restore view preference (runs every open so hub/terminal tab stays correct)
+  const storedView = localStorage.getItem('hermes-terminal-view') || 'terminal';
+  switchTerminalView(storedView, true); // silent=true, skip fit until connected
 
-  // Restore toggle state from localStorage
+  // Restore theme preference
+  const storedTheme = localStorage.getItem('hermes-terminal-theme') || 'dark';
+  setTerminalPageTheme(storedTheme);
+
+  // Restore toggle state
   const toggle = document.getElementById('terminalRunHermesToggle');
   if (toggle) {
     const stored = localStorage.getItem('hermes-terminal-run-hermes');
     if (stored !== null) toggle.checked = stored === '1';
     TERMINAL_PAGE.runHermes = toggle.checked;
   }
+
+  // If hub view is active, nothing more to do
+  if (TERMINAL_PAGE.activeView === 'hub') return;
+
+  // Skip full reconnect if already connected to the same session (unless forced)
+  if (!force && TERMINAL_PAGE.sessionId && TERMINAL_PAGE.sessionId === sid && TERMINAL_PAGE.source) {
+    _fitTerminalPage();
+    return;
+  }
+
+  const term = _ensureXtermPage();
+  if (!term) return;
 
   if (!sid) {
     term.writeln('\r\n[No active session. Start a chat first, then open Terminal.]\r\n');
@@ -193,6 +256,48 @@ function setTerminalPageRunHermes(enabled) {
   try { localStorage.setItem('hermes-terminal-run-hermes', enabled ? '1' : '0'); } catch (_) {}
 }
 
+function setTerminalPageTheme(theme) {
+  TERMINAL_PAGE.theme = theme;
+  try { localStorage.setItem('hermes-terminal-theme', theme); } catch (_) {}
+  document.querySelectorAll('.terminal-theme-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.theme === theme);
+  });
+  if (!TERMINAL_PAGE.term) return;
+  const resolved = _resolveTerminalTheme(theme);
+  TERMINAL_PAGE.term.options.theme = resolved;
+  const { viewport } = _terminalPageEls();
+  if (viewport) viewport.style.background = resolved.background || '';
+}
+
+function switchTerminalView(view, silent) {
+  TERMINAL_PAGE.activeView = view || 'terminal';
+  try { localStorage.setItem('hermes-terminal-view', TERMINAL_PAGE.activeView); } catch (_) {}
+
+  const isHub = TERMINAL_PAGE.activeView === 'hub';
+  const tEl = document.getElementById('mainTerminal');
+  const hEl = document.getElementById('mainHub');
+  const ctrlEl = document.getElementById('terminalControlPanel');
+  const refreshBtn = document.getElementById('terminalPageRefreshBtn');
+  const hubReloadBtn = document.getElementById('terminalHubReloadBtn');
+
+  if (tEl) tEl.style.display = isHub ? 'none' : '';
+  if (hEl) hEl.style.display = isHub ? 'flex' : 'none';
+  if (ctrlEl) ctrlEl.style.display = isHub ? 'none' : '';
+  if (refreshBtn) refreshBtn.style.display = isHub ? 'none' : '';
+  if (hubReloadBtn) hubReloadBtn.style.display = isHub ? '' : 'none';
+
+  document.querySelectorAll('.terminal-view-tab').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.view === TERMINAL_PAGE.activeView);
+  });
+
+  if (!isHub && !silent && TERMINAL_PAGE.term) _fitTerminalPage();
+}
+
+function terminalCmdHint(el) {
+  const hint = document.getElementById('terminalCmdHint');
+  if (hint) hint.textContent = el.dataset.hint || '';
+}
+
 function clearTerminalPage() {
   if (TERMINAL_PAGE.term) TERMINAL_PAGE.term.clear();
 }
@@ -201,19 +306,21 @@ function copyTerminalPageOutput() {
   if (!TERMINAL_PAGE.term) return;
   try {
     const sel = TERMINAL_PAGE.term.getSelection ? TERMINAL_PAGE.term.getSelection() : '';
-    const text = sel || '';
-    if (text) navigator.clipboard.writeText(text).catch(e => console.error('Copy failed:', e));
+    if (sel) navigator.clipboard.writeText(sel).catch(e => console.error('Copy failed:', e));
   } catch (e) {
     console.error('Failed to copy terminal output:', e);
   }
 }
 
 function syncTerminalPageTheme() {
-  if (TERMINAL_PAGE.term) TERMINAL_PAGE.term.options.theme = _terminalPageTheme();
+  if (TERMINAL_PAGE.term && TERMINAL_PAGE.theme === 'match') {
+    TERMINAL_PAGE.term.options.theme = _terminalPageTheme();
+  }
 }
 
-// Self-initialize by watching #panelTerminal for the 'active' class.
-// Avoids requiring panels.js to call initTerminalPage() explicitly.
+// ── Self-initialize via MutationObserver ─────────────────────────────────────
+// Watches #panelTerminal for the 'active' class — avoids modifying panels.js.
+
 (function _watchTerminalPanel() {
   let _activated = false;
 
