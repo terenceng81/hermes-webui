@@ -10,13 +10,13 @@ const TERMINAL_PAGE = {
   source: null,    // EventSource for SSE output
   sessionId: null,
   resizeObserver: null,
+  runHermes: false,
 };
 
 function _terminalPageEls() {
   return {
     viewport: document.getElementById('terminalPageViewport'),
     surface: document.getElementById('terminalPageSurface'),
-    workspaceSelect: document.getElementById('terminalPageWorkspaceSelect'),
   };
 }
 
@@ -146,13 +146,20 @@ function _connectTerminalPageOutput() {
 
 async function initTerminalPage() {
   const sid = (typeof S !== 'undefined' && S && S.session) ? S.session.session_id : null;
-  const workspace = (typeof S !== 'undefined' && S && S.session) ? S.session.workspace : null;
 
   const term = _ensureXtermPage();
   if (!term) return;
 
-  if (!sid || !workspace) {
-    term.writeln('\r\n[No active workspace session. Start a chat first, then open Terminal.]\r\n');
+  // Restore toggle state from localStorage
+  const toggle = document.getElementById('terminalRunHermesToggle');
+  if (toggle) {
+    const stored = localStorage.getItem('hermes-terminal-run-hermes');
+    if (stored !== null) toggle.checked = stored === '1';
+    TERMINAL_PAGE.runHermes = toggle.checked;
+  }
+
+  if (!sid) {
+    term.writeln('\r\n[No active session. Start a chat first, then open Terminal.]\r\n');
     return;
   }
 
@@ -163,9 +170,27 @@ async function initTerminalPage() {
     await api('/api/terminal/start', { method: 'POST', body: JSON.stringify({ session_id: sid, rows: dims.rows, cols: dims.cols }) });
     _connectTerminalPageOutput();
     _fitTerminalPage();
+    if (TERMINAL_PAGE.runHermes) {
+      setTimeout(() => sendTerminalPageCommand('hermes\n'), 600);
+    }
   } catch (e) {
     term.writeln('\r\n[Failed to start terminal: ' + (e && e.message || e) + ']\r\n');
   }
+}
+
+function sendTerminalPageCommand(cmd) {
+  const sid = TERMINAL_PAGE.sessionId;
+  if (!sid) {
+    if (TERMINAL_PAGE.term) TERMINAL_PAGE.term.writeln('\r\n[Not connected. Click Reconnect first.]\r\n');
+    return;
+  }
+  api('/api/terminal/input', { method: 'POST', body: JSON.stringify({ session_id: sid, data: cmd }) })
+    .catch(e => console.error('[terminal-page] command error:', e));
+}
+
+function setTerminalPageRunHermes(enabled) {
+  TERMINAL_PAGE.runHermes = enabled;
+  try { localStorage.setItem('hermes-terminal-run-hermes', enabled ? '1' : '0'); } catch (_) {}
 }
 
 function clearTerminalPage() {
@@ -181,10 +206,6 @@ function copyTerminalPageOutput() {
   } catch (e) {
     console.error('Failed to copy terminal output:', e);
   }
-}
-
-function switchTerminalPageWorkspace() {
-  initTerminalPage();
 }
 
 function syncTerminalPageTheme() {

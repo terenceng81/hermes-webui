@@ -274,12 +274,31 @@
         </div>
       </div>
       <div class="terminal-control-panel">
-        <label class="terminal-control-label" for="terminalPageWorkspaceSelect" data-i18n="workspace">Workspace</label>
-        <select id="terminalPageWorkspaceSelect" onchange="switchTerminalPageWorkspace()">
-          <option>Default</option>
-        </select>
-        <button type="button" class="terminal-copy" id="terminalPageCopyBtn" onclick="copyTerminalPageOutput()" data-i18n="terminal_copy_output">Copy output</button>
-        <button type="button" class="terminal-copy" id="terminalPageClearBtn" onclick="clearTerminalPage()" data-i18n="terminal_clear">Clear</button>
+        <div class="terminal-toggle-row">
+          <label class="terminal-control-label" for="terminalRunHermesToggle">Run Hermes</label>
+          <label class="terminal-toggle-switch has-tooltip" data-tooltip="Auto-start Hermes TUI when terminal connects">
+            <input type="checkbox" id="terminalRunHermesToggle" onchange="setTerminalPageRunHermes(this.checked)">
+            <span class="terminal-toggle-knob"></span>
+          </label>
+        </div>
+        <div class="terminal-toggle-hint">Auto-starts the Hermes TUI on connect.</div>
+        <div class="terminal-control-label" style="margin-top:10px;">CLI Commands</div>
+        <div class="terminal-quick-cmds">
+          <button class="terminal-quick-btn has-tooltip" data-tooltip="Switch the active AI model" onclick="sendTerminalPageCommand('hermes model\n')">model</button>
+          <button class="terminal-quick-btn has-tooltip" data-tooltip="Show system status" onclick="sendTerminalPageCommand('hermes status\n')">status</button>
+          <button class="terminal-quick-btn has-tooltip" data-tooltip="Diagnose agent issues" onclick="sendTerminalPageCommand('hermes doctor\n')">doctor</button>
+          <button class="terminal-quick-btn has-tooltip" data-tooltip="Update Hermes agent" onclick="sendTerminalPageCommand('hermes update\n')">update</button>
+          <button class="terminal-quick-btn has-tooltip" data-tooltip="Open configuration" onclick="sendTerminalPageCommand('hermes config\n')">config</button>
+          <button class="terminal-quick-btn has-tooltip" data-tooltip="Manage chat sessions" onclick="sendTerminalPageCommand('hermes sessions\n')">sessions</button>
+          <button class="terminal-quick-btn has-tooltip" data-tooltip="Control the gateway service" onclick="sendTerminalPageCommand('hermes gateway\n')">gateway</button>
+          <button class="terminal-quick-btn has-tooltip" data-tooltip="Tail the agent log" onclick="sendTerminalPageCommand('hermes logs\n')">logs</button>
+          <button class="terminal-quick-btn has-tooltip" data-tooltip="Browse installed skills" onclick="sendTerminalPageCommand('hermes skills\n')">skills</button>
+          <button class="terminal-quick-btn has-tooltip" data-tooltip="Backup agent data" onclick="sendTerminalPageCommand('hermes backup\n')">backup</button>
+          <button class="terminal-quick-btn has-tooltip" data-tooltip="View usage insights" onclick="sendTerminalPageCommand('hermes insights\n')">insights</button>
+          <button class="terminal-quick-btn has-tooltip" data-tooltip="Manage agent profiles" onclick="sendTerminalPageCommand('hermes profiles\n')">profiles</button>
+        </div>
+        <button type="button" class="terminal-copy" id="terminalPageCopyBtn" onclick="copyTerminalPageOutput()">Copy selection</button>
+        <button type="button" class="terminal-copy" id="terminalPageClearBtn" onclick="clearTerminalPage()">Clear</button>
       </div>
     </div>
     <!-- Hub panel (sidebar controls for the embedded dashboard iframe) -->
@@ -828,7 +847,7 @@
       </div>
     </div>
     <div id="mainHub" class="main-view">
-      <iframe id="hubIframe" src="http://127.0.0.1:9119" frameborder="0" title="Agent Hub" allow="clipboard-read; clipboard-write"></iframe>
+      <iframe id="hubIframe" src="http://localhost:9119" frameborder="0" title="Agent Hub" allow="clipboard-read; clipboard-write"></iframe>
     </div>
     <div id="mainSettings" class="main-view">
       <div class="settings-main">

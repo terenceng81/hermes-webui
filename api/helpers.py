@@ -48,6 +48,7 @@ def _security_headers(handler):
         "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; "
         "img-src 'self' data: https: blob:; font-src 'self' data: https://cdn.jsdelivr.net https://fonts.gstatic.com; connect-src 'self' https://cdn.jsdelivr.net; "
         "manifest-src 'self' https://*.cloudflareaccess.com; "
+        "frame-src http://localhost:9119 http://127.0.0.1:9119; "
         "base-uri 'self'; form-action 'self'"
     )
     handler.send_header(
